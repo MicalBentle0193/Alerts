@@ -4,7 +4,11 @@ workflows:
     environment:
       flutter: stable
       xcode: latest
-      android: latest
+      cache:
+        paths:
+          - "$HOME/.pub-cache"
+          - "$HOME/.gradle/caches"
+          - "$HOME/.gradle/wrapper"
     scripts:
       - name: Install dependencies
         script: |
@@ -18,8 +22,4 @@ workflows:
     artifacts:
       - build/app/outputs/flutter-apk/app-release.apk
       - build/ios/iphoneos/Runner.app
-    cache:
-      paths:
-        - "$HOME/.pub-cache"
-        - "$HOME/.gradle/caches"
-        - "$HOME/.gradle/wrapper"
+  # cache paths moved to environment above
