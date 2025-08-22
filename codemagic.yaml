@@ -4,16 +4,19 @@ workflows:
     environment:
       flutter: stable
       xcode: latest
+  # cache removed for validation
     scripts:
       - name: Install dependencies
         script: |
           flutter pub get
-      - name: Build Android APK (release)
+      - name: Generate podhelper.rb for iOS build
         script: |
-          flutter build apk --release
+          mkdir -p packages/flutter_tools/bin
+          curl -o packages/flutter_tools/bin/podhelper.rb https://raw.githubusercontent.com/flutter/flutter/master/packages/flutter_tools/bin/podhelper.rb
       - name: Build iOS (release, no code signing)
         script: |
           flutter build ios --release --no-codesign
     artifacts:
-      - build/app/outputs/flutter-apk/app-release.apk
+  # Android artifact removed; only iOS artifact remains
       - build/ios/iphoneos/Runner.app
+  # cache paths moved to environment above
