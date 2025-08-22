@@ -4,11 +4,7 @@ workflows:
     environment:
       flutter: stable
       xcode: latest
-      cache:
-        paths:
-          - "$HOME/.pub-cache"
-          - "$HOME/.gradle/caches"
-          - "$HOME/.gradle/wrapper"
+  # cache removed for validation
     scripts:
       - name: Install dependencies
         script: |
