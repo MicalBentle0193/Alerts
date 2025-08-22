@@ -4,6 +4,7 @@ workflows:
     environment:
       flutter: stable
       xcode: latest
+  # cache removed for validation
     scripts:
       - name: Install dependencies
         script: |
@@ -12,4 +13,6 @@ workflows:
         script: |
           flutter build ios --release --no-codesign
     artifacts:
+  # Android artifact removed; only iOS artifact remains
       - build/ios/iphoneos/Runner.app
+  # cache paths moved to environment above
