@@ -1,22 +1,25 @@
 workflows:
-  wynford_weather_alerts_release:
-    name: Wynford Weather Alerts Release Build
+  ios-workflow:
+    name: iOS build
+    max_build_duration: 60
     environment:
       flutter: stable
       xcode: latest
-  # cache removed for validation
+      cocoapods: default
+      vars:
+        BUNDLE_ID: "wynford.weather.mission"   # <- change this
+        APP_NAME: "Wynford Weather Alerts"                   # <- change this
     scripts:
       - name: Install dependencies
         script: |
           flutter pub get
-      - name: Generate podhelper.rb for iOS build
-        script: |
-          mkdir -p packages/flutter_tools/bin
-          curl -o packages/flutter_tools/bin/podhelper.rb https://raw.githubusercontent.com/flutter/flutter/master/packages/flutter_tools/bin/podhelper.rb
-      - name: Build iOS (release, no code signing)
+      - name: Build iOS
         script: |
           flutter build ios --release --no-codesign
     artifacts:
-  # Android artifact removed; only iOS artifact remains
-      - build/ios/iphoneos/Runner.app
-  # cache paths moved to environment above
+      - build/ios/iphoneos/*.app
+      - build/ios/ipa/*.ipa
+    publishing:
+      email:
+        recipients:
+          - your@email.com   # <- change this
