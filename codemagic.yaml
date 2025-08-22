@@ -1,25 +1,25 @@
 workflows:
-  ios-workflow:
-    name: iOS build
-    max_build_duration: 60
+  wynford_weather_alerts_release:
+    name: Wynford Weather Alerts Release Build
     environment:
       flutter: stable
       xcode: latest
-      cocoapods: default
-      vars:
-        BUNDLE_ID: "wynford.weather.mission"   # <- change this
-        APP_NAME: "Wynford Weather Alerts"                   # <- change this
+      android: latest
     scripts:
       - name: Install dependencies
         script: |
           flutter pub get
-      - name: Build iOS
+      - name: Build Android APK (release)
+        script: |
+          flutter build apk --release
+      - name: Build iOS (release, no code signing)
         script: |
           flutter build ios --release --no-codesign
     artifacts:
-      - build/ios/iphoneos/*.app
-      - build/ios/ipa/*.ipa
-    publishing:
-      email:
-        recipients:
-          - your@email.com   # <- change this
+      - build/app/outputs/flutter-apk/app-release.apk
+      - build/ios/iphoneos/Runner.app
+    cache:
+      paths:
+        - "$HOME/.pub-cache"
+        - "$HOME/.gradle/caches"
+        - "$HOME/.gradle/wrapper"
